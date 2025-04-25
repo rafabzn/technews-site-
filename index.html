@@ -1,33 +1,36 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechNews</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TechNews</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <header>
-        <h1>TechNews</h1>
-        <nav>
-            <a href="index.html">Início</a>
-            <a href="noticia.html">Notícia</a>
-            <a href="login.html">Login</a>
-        </nav>
-    </header>
-    <main>
-        <section class="anuncio">Área para propaganda futura</section>
-        <section class="noticias">
-            <h2>Últimas Notícias</h2>
-            <ul>
-                <li><a href="noticia.html">Título da Notícia 1</a></li>
-                <li><a href="noticia.html">Título da Notícia 2</a></li>
-            </ul>
-        </section>
-        <section class="anuncio">Espaço reservado para anúncios</section>
-    </main>
-    <footer>
-        <p>Criado por Rafael dos Santos Vieira</p>
-    </footer>
+<body class="bg-gray-900 text-white">
+  <header class="p-4 text-center bg-gray-800">
+    <h1 class="text-2xl font-bold text-cyan-400">TechNews</h1>
+  </header>
+  <main class="p-4" id="noticias-container">
+    <p>Carregando notícias...</p>
+  </main>
+  <footer class="text-center text-sm text-gray-500 p-4">
+    Criado por Rafael dos Santos Vieira
+  </footer>
+  <script>
+    fetch('http://localhost:5000/api/noticias')
+      .then(res => res.json())
+      .then(dados => {
+        const container = document.getElementById('noticias-container');
+        container.innerHTML = '';
+        dados.forEach(noticia => {
+          const card = document.createElement('div');
+          card.className = 'bg-gray-800 p-4 my-2 rounded-xl shadow-md';
+          card.innerHTML = `<h2 class="text-xl font-semibold text-cyan-300">${noticia.titulo}</h2>
+                            <p class="text-sm text-gray-400">${noticia.data}</p>
+                            <p>${noticia.conteudo}</p>`;
+          container.appendChild(card);
+        });
+      });
+  </script>
 </body>
 </html>
